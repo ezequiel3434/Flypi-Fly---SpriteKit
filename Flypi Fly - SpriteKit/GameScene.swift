@@ -20,14 +20,35 @@ class GameScene: SKScene {
         
         //Background
                
-               let texturaFondo = SKTexture(imageNamed: "fondo.png")
-               BGImage = SKSpriteNode(texture: texturaFondo)
-               
-               BGImage.size.height = self.frame.height
-                
-        BGImage.zPosition = -1
-               self.addChild(BGImage)
+        let texturaFondo = SKTexture(imageNamed: "fondo.png")
+        let BGMovement = SKAction.move(by: CGVector(dx: -texturaFondo.size().width, dy: 0), duration: 4)
+        let BGMovement2 = SKAction.move(by: CGVector(dx: texturaFondo.size().width, dy: 0), duration: 0)
         
+        let infiniteBGMovement = SKAction.repeatForever(SKAction.sequence([BGMovement,BGMovement2]))
+        
+        
+        
+        var i: CGFloat = 0
+        
+        while i<2 {
+            
+        
+        
+        
+        BGImage = SKSpriteNode(texture: texturaFondo)
+               
+        BGImage.size.height = self.frame.height
+        
+        
+        BGImage.position = CGPoint(x: texturaFondo.size().width * i, y: self.frame.midY)
+        BGImage.zPosition = -1
+        
+        BGImage.run(infiniteBGMovement)
+        self.addChild(BGImage)
+        
+            i += 1
+            
+        }
         // Fly
         let flyTexture1 = SKTexture(imageNamed: "fly1.png")
         let flyTexture2 = SKTexture(imageNamed: "fly2.png")
