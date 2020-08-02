@@ -62,6 +62,9 @@ class GameScene: SKScene {
         
         fly.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         
+        print(flyTexture1.size().width)
+        print(fly.frame.width)
+        
         fly.run(infiniteAnimation)
         
         self.addChild(fly)
@@ -75,7 +78,9 @@ class GameScene: SKScene {
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-       
+        fly.physicsBody = SKPhysicsBody(circleOfRadius: fly.frame.height/2)
+              
+        fly.physicsBody!.isDynamic = true
     }
     
    
