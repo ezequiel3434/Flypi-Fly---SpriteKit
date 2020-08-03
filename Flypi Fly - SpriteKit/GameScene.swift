@@ -21,6 +21,11 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         
         
+        // Fly
+              
+              addFly()
+              
+        
         //Background
         addBackground()
         
@@ -31,10 +36,7 @@ class GameScene: SKScene {
         addTubes()
         
         
-        // Fly
-        
-        addFly()
-        
+      
        
         
        
@@ -84,16 +86,23 @@ class GameScene: SKScene {
     
     func addTubes() {
         
+        let gapDifficulty = fly.size.height * 3
+        
+        //Numoro entre 0 y lo mitad del alto de la pantalla
+        let randomMovement = CGFloat(arc4random() % UInt32(self.frame.height/2))
+        
+        let compensation = randomMovement - self.frame.height / 4
+        
         
         let tubeTexture = SKTexture(imageNamed: "Tubo1.png")
         let tubeTexture2 = SKTexture(imageNamed: "Tubo2.png")
         tube = SKSpriteNode(texture: tubeTexture)
         tube2 = SKSpriteNode(texture: tubeTexture2)
         
-        tube.position = CGPoint(x: 0.0, y: self.frame.midY + tubeTexture.size().height / 1.5)
+        tube.position = CGPoint(x: 0.0, y: self.frame.midY + tubeTexture.size().height / 2 + gapDifficulty + compensation)
         tube.zPosition = 0
         tube2.zPosition = 0
-        tube2.position = CGPoint(x: 0.0, y: -(self.frame.midY + tubeTexture.size().height / 1.5))
+        tube2.position = CGPoint(x: 0.0, y: -(self.frame.midY + tubeTexture.size().height / 2) - gapDifficulty + compensation)
         self.addChild(tube2)
         self.addChild(tube)
         
