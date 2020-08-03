@@ -21,6 +21,10 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         
         
+        // tube timer
+        
+        _ = Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(self.addTubes), userInfo: nil, repeats: true)
+        
         // Fly
               
               addFly()
@@ -84,7 +88,13 @@ class GameScene: SKScene {
         
     }
     
-    func addTubes() {
+    @objc func addTubes() {
+        
+        let tubesMovement = SKAction.move(by: CGVector(dx: -3 * self.frame.width, dy: 0), duration: TimeInterval(self.frame.width/80))
+        
+        let tubesRemove = SKAction.removeFromParent()
+        let moveAndRemoveTubes = SKAction.sequence([tubesMovement, tubesRemove])
+        
         
         let gapDifficulty = fly.size.height * 3
         
@@ -99,10 +109,12 @@ class GameScene: SKScene {
         tube = SKSpriteNode(texture: tubeTexture)
         tube2 = SKSpriteNode(texture: tubeTexture2)
         
-        tube.position = CGPoint(x: 0.0, y: self.frame.midY + tubeTexture.size().height / 2 + gapDifficulty + compensation)
+        tube.position = CGPoint(x: self.frame.width, y: self.frame.midY + tubeTexture.size().height / 2 + gapDifficulty + compensation)
         tube.zPosition = 0
         tube2.zPosition = 0
-        tube2.position = CGPoint(x: 0.0, y: -(self.frame.midY + tubeTexture.size().height / 2) - gapDifficulty + compensation)
+        tube2.position = CGPoint(x: self.frame.width, y: -(self.frame.midY + tubeTexture.size().height / 2) - gapDifficulty + compensation)
+        tube.run(moveAndRemoveTubes)
+        tube2.run(moveAndRemoveTubes)
         self.addChild(tube2)
         self.addChild(tube)
         
@@ -139,7 +151,7 @@ class GameScene: SKScene {
         fly.physicsBody!.isDynamic = true
         
         fly.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
-        fly.physicsBody!.applyImpulse(CGVector(dx: 0, dy: 100))
+        fly.physicsBody!.applyImpulse(CGVector(dx: 0, dy: 80))
     }
     
    
