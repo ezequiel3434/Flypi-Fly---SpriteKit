@@ -81,6 +81,9 @@ class GameScene: SKScene {
         fly.physicsBody = SKPhysicsBody(circleOfRadius: fly.frame.height/2)
               
         fly.physicsBody!.isDynamic = true
+        
+        fly.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
+        fly.physicsBody!.applyImpulse(CGVector(dx: 0, dy: 100))
     }
     
    
