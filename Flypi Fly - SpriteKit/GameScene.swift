@@ -21,8 +21,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var fly = SKSpriteNode()
     var BGImage = SKSpriteNode()
     
-    var tube = SKNode()
-    var tube2 = SKNode()
+    var tube = SKSpriteNode()
+    var tube2 = SKSpriteNode()
+    var scoreLabel = SKLabelNode()
+    var score = 0
+    
     
     override func didMove(to view: SKView) {
         
@@ -30,7 +33,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // tube timer
         
-        _ = Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(self.addTubes), userInfo: nil, repeats: true)
+        _ = Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(self.addTubesSpaces), userInfo: nil, repeats: true)
+        
+        
+        //Score
+        addScoreLabel()
         
         // Fly
               
@@ -44,11 +51,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addGround()
         
         // tubes
-        addTubes()
+        addTubesSpaces()
         
         // spaces between tubes
         
-        addSpace()
+//        addSpace()
       
        
         
@@ -100,7 +107,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
-    @objc func addTubes() {
+    @objc func addTubesSpaces() {
         
         let tubesMovement = SKAction.move(by: CGVector(dx: -3 * self.frame.width, dy: 0), duration: TimeInterval(self.frame.width/80))
         
@@ -142,6 +149,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(tube2)
         self.addChild(tube)
         
+        // espacios
+//        addSpace()
+        
+        
+        
+       
+               let space = SKSpriteNode()
+               
+               
+               space.position = CGPoint(x:self.frame.midX + self.frame.width , y:self.frame.midY + compensation)
+               
+               space.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width:tubeTexture.size().width , height: fly.size.height * 3))
+               
+               space.physicsBody!.isDynamic = false
+               space.zPosition = 1
+               
+               space.physicsBody!.categoryBitMask = tipoNodo.spaceTubes.rawValue
+               space.physicsBody!.collisionBitMask = 0
+               space.physicsBody!.contactTestBitMask = tipoNodo.mosca.rawValue
+               
+               
+               space.run(moveAndRemoveTubes)
+               
+               
+               self.addChild(space)
+        
     }
     
     
@@ -166,6 +199,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(space)
         
+    }
+    
+    func addScoreLabel() {
+        scoreLabel.fontName = "Avenir"
+        scoreLabel.fontSize = 80
+        scoreLabel.text = "0"
+        scoreLabel.position = CGPoint(x: self.frame.midX, y: (self.frame.midY + self.frame.size.height/3) )
+        
+        self.addChild(scoreLabel)
     }
     
     func addFly() {
@@ -207,7 +249,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
+        let cuerpoA = contact.bodyA
+        let cuerpoB = contact.bodyB
         
+        
+        if cuerpoA.categoryBitMask == tipoNodo.mosca.rawValue && cuerpoB.categoryBitMask == tipoNodo.spaceTubes.rawValue ||
+            cuerpoB.categoryBitMask == tipoNodo.mosca.rawValue && cuerpoA.categoryBitMask == tipoNodo.spaceTubes.rawValue {
+             score += 1
+        }
+        scoreLabel.text = String(score)
+       
+       
     }
    
     
