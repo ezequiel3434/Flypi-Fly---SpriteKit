@@ -25,38 +25,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var tube2 = SKSpriteNode()
     var scoreLabel = SKLabelNode()
     var score = 0
+    var timer = Timer()
+    var gameOver = false
     
     
     override func didMove(to view: SKView) {
         
         self.physicsWorld.contactDelegate = self
         
-        // tube timer
-        
-        _ = Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(self.addTubesSpaces), userInfo: nil, repeats: true)
-        
-        
-        //Score
-        addScoreLabel()
-        
-        // Fly
-              
-              addFly()
-              
-        
-        //Background
-        addBackground()
-        
-        // Ground
-        addGround()
-        
-        // tubes
-        addTubesSpaces()
-        
-        // spaces between tubes
-        
-//        addSpace()
-      
+        reiniciar()
        
         
        
@@ -202,11 +179,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func addScoreLabel() {
-        scoreLabel.fontName = "Avenir"
+        scoreLabel.fontName = "04b_19"
         scoreLabel.fontSize = 80
         scoreLabel.text = "0"
         scoreLabel.position = CGPoint(x: self.frame.midX, y: (self.frame.midY + self.frame.size.height/3) )
-        
+        scoreLabel.zPosition = 2
         self.addChild(scoreLabel)
     }
     
@@ -241,11 +218,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
+        if gameOver == false {
+            fly.physicsBody!.isDynamic = true
+            
+            fly.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
+            fly.physicsBody!.applyImpulse(CGVector(dx: 0, dy: 80))
+        } else {
+            gameOver = false
+            score = 0
+            self.speed = 1
+            self.removeAllChildren()
+            reiniciar()
+        }
               
-        fly.physicsBody!.isDynamic = true
         
-        fly.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
-        fly.physicsBody!.applyImpulse(CGVector(dx: 0, dy: 80))
+    }
+    
+    func reiniciar() {
+        // tube timer
+                
+                timer = Timer.scheduledTimer(timeInterval: 4, target: self, selector: #selector(self.addTubesSpaces), userInfo: nil, repeats: true)
+                
+                
+                //Score
+                addScoreLabel()
+                
+                // Fly
+                      
+                      addFly()
+                      
+                
+                //Background
+                addBackground()
+                
+                // Ground
+                addGround()
+                
+                // tubes
+                addTubesSpaces()
+                
+                // spaces between tubes
+                
+        //        addSpace()
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
@@ -256,8 +270,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if cuerpoA.categoryBitMask == tipoNodo.mosca.rawValue && cuerpoB.categoryBitMask == tipoNodo.spaceTubes.rawValue ||
             cuerpoB.categoryBitMask == tipoNodo.mosca.rawValue && cuerpoA.categoryBitMask == tipoNodo.spaceTubes.rawValue {
              score += 1
+            scoreLabel.text = String(score)
+        }else {
+            gameOver = true
+            self.speed = 0
+            timer.invalidate()
+            scoreLabel.text = "Game Over"
         }
-        scoreLabel.text = String(score)
+        
+        
+        
+        
        
        
     }

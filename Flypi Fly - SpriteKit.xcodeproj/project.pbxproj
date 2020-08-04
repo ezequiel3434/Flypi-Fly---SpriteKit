@@ -20,6 +20,7 @@
 		370AC74B24D749E9002C6CAD /* fly1.png in Resources */ = {isa = PBXBuildFile; fileRef = 370AC74624D749E9002C6CAD /* fly1.png */; };
 		370AC74C24D749E9002C6CAD /* Tubo2.png in Resources */ = {isa = PBXBuildFile; fileRef = 370AC74724D749E9002C6CAD /* Tubo2.png */; };
 		370AC74D24D749E9002C6CAD /* fly2.png in Resources */ = {isa = PBXBuildFile; fileRef = 370AC74824D749E9002C6CAD /* fly2.png */; };
+		37F36E3524D99FD000DC36E7 /* 04B_19__.TTF in Resources */ = {isa = PBXBuildFile; fileRef = 37F36E3424D99FD000DC36E7 /* 04B_19__.TTF */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		370AC74624D749E9002C6CAD /* fly1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fly1.png; sourceTree = "<group>"; };
 		370AC74724D749E9002C6CAD /* Tubo2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Tubo2.png; sourceTree = "<group>"; };
 		370AC74824D749E9002C6CAD /* fly2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fly2.png; sourceTree = "<group>"; };
+		37F36E3424D99FD000DC36E7 /* 04B_19__.TTF */ = {isa = PBXFileReference; lastKnownFileType = file; path = 04B_19__.TTF; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 		370AC72B24D741FC002C6CAD /* Flypi Fly - SpriteKit */ = {
 			isa = PBXGroup;
 			children = (
+				37F36E3424D99FD000DC36E7 /* 04B_19__.TTF */,
 				370AC72C24D741FC002C6CAD /* AppDelegate.swift */,
 				370AC72E24D741FC002C6CAD /* GameScene.sks */,
 				370AC73024D741FC002C6CAD /* Actions.sks */,
@@ -154,6 +157,7 @@
 				370AC73124D741FC002C6CAD /* Actions.sks in Resources */,
 				370AC74D24D749E9002C6CAD /* fly2.png in Resources */,
 				370AC74C24D749E9002C6CAD /* Tubo2.png in Resources */,
+				37F36E3524D99FD000DC36E7 /* 04B_19__.TTF in Resources */,
 				370AC74A24D749E9002C6CAD /* fondo.png in Resources */,
 				370AC74B24D749E9002C6CAD /* fly1.png in Resources */,
 			);
