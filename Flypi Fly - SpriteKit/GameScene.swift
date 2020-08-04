@@ -9,7 +9,7 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     enum tipoNodo: UInt32 {
         case mosca = 1
@@ -26,6 +26,7 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         
+        self.physicsWorld.contactDelegate = self
         
         // tube timer
         
@@ -119,6 +120,13 @@ class GameScene: SKScene {
         tube.zPosition = 0
         tube2.zPosition = 0
         tube2.position = CGPoint(x: self.frame.width, y: -(self.frame.midY + tubeTexture.size().height / 2) - gapDifficulty + compensation)
+        
+        tube.physicsBody = SKPhysicsBody(rectangleOf: tubeTexture.size())
+        tube2.physicsBody = SKPhysicsBody(rectangleOf: tubeTexture2.size())
+        tube.physicsBody!.isDynamic = false
+        tube2.physicsBody!.isDynamic = false
+        
+        
         tube.run(moveAndRemoveTubes)
         tube2.run(moveAndRemoveTubes)
         self.addChild(tube2)
@@ -139,6 +147,8 @@ class GameScene: SKScene {
          
          fly.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         fly.zPosition = 1
+        fly.physicsBody = SKPhysicsBody(circleOfRadius: fly.frame.height/2)
+        fly.physicsBody!.isDynamic = false
          
          
          fly.run(infiniteAnimation)
@@ -152,7 +162,7 @@ class GameScene: SKScene {
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        fly.physicsBody = SKPhysicsBody(circleOfRadius: fly.frame.height/2)
+        
               
         fly.physicsBody!.isDynamic = true
         
@@ -160,6 +170,9 @@ class GameScene: SKScene {
         fly.physicsBody!.applyImpulse(CGVector(dx: 0, dy: 80))
     }
     
+    func didBegin(_ contact: SKPhysicsContact) {
+        <#code#>
+    }
    
     
     
