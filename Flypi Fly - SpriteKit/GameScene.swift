@@ -11,6 +11,12 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    enum tipoNodo: UInt32 {
+        case mosca = 1
+        case ground = 2
+        case spaceTubes = 4
+    }
+    
     
     var fly = SKSpriteNode()
     var BGImage = SKSpriteNode()
