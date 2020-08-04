@@ -92,6 +92,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ground.position = CGPoint(x: -self.frame.midX, y: -self.frame.height/2)
         ground.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: self.frame.width, height: 1))
         ground.physicsBody!.isDynamic = false
+        ground.physicsBody?.categoryBitMask = tipoNodo.ground.rawValue
+        ground.physicsBody?.collisionBitMask = tipoNodo.mosca.rawValue
+        ground.physicsBody?.contactTestBitMask = tipoNodo.mosca.rawValue
         self.addChild(ground)
         
         
@@ -127,7 +130,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         tube2.physicsBody = SKPhysicsBody(rectangleOf: tubeTexture2.size())
         tube.physicsBody!.isDynamic = false
         tube2.physicsBody!.isDynamic = false
-        
+        tube.physicsBody?.categoryBitMask = tipoNodo.ground.rawValue
+        tube.physicsBody?.collisionBitMask = tipoNodo.mosca.rawValue
+        tube.physicsBody?.contactTestBitMask = tipoNodo.mosca.rawValue
+        tube2.physicsBody?.categoryBitMask = tipoNodo.ground.rawValue
+        tube2.physicsBody?.collisionBitMask = tipoNodo.mosca.rawValue
+        tube2.physicsBody?.contactTestBitMask = tipoNodo.mosca.rawValue
         
         tube.run(moveAndRemoveTubes)
         tube2.run(moveAndRemoveTubes)
@@ -151,7 +159,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         space.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: tubeTexture.size().width, height: fly.size.height * 3))
         space.physicsBody?.isDynamic = false
         space.zPosition = 1
-        
+        space.physicsBody?.categoryBitMask = tipoNodo.spaceTubes.rawValue
+        space.physicsBody?.collisionBitMask = 0
+        space.physicsBody?.contactTestBitMask = tipoNodo.mosca.rawValue
         space.run(moveAndRemoveSpaceTubes)
         
         self.addChild(space)
@@ -169,13 +179,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
          
         fly = SKSpriteNode(texture: flyTexture1)
          
-         fly.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+        fly.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
         fly.zPosition = 1
         fly.physicsBody = SKPhysicsBody(circleOfRadius: fly.frame.height/2)
         fly.physicsBody!.isDynamic = false
+        fly.physicsBody?.categoryBitMask = tipoNodo.mosca.rawValue
+        fly.physicsBody?.collisionBitMask = tipoNodo.ground.rawValue
+        fly.physicsBody?.contactTestBitMask = tipoNodo.ground.rawValue | tipoNodo.spaceTubes.rawValue
          
-         
-         fly.run(infiniteAnimation)
+        fly.run(infiniteAnimation)
          
          self.addChild(fly)
          
