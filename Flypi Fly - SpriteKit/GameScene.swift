@@ -46,7 +46,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // tubes
         addTubes()
         
+        // spaces between tubes
         
+        addSpace()
       
        
         
@@ -134,6 +136,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    
+    func addSpace() {
+        let tubeTexture = SKTexture(imageNamed: "Tubo1.png")
+        let tubesSpaceMovement = SKAction.move(by: CGVector(dx: -3 * self.frame.width, dy: 0), duration: TimeInterval(self.frame.width/80))
+        
+        let tubesSpaceRemove = SKAction.removeFromParent()
+        let moveAndRemoveSpaceTubes = SKAction.sequence([tubesSpaceMovement, tubesSpaceRemove])
+        
+        let randomMovement = CGFloat(arc4random() % UInt32(self.frame.height/2))
+        let compensation = randomMovement - self.frame.height / 4
+        let space = SKSpriteNode()
+        space.position = CGPoint(x: self.frame.midX + self.frame.width, y: self.frame.midY + compensation)
+        space.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: tubeTexture.size().width, height: fly.size.height * 3))
+        space.physicsBody?.isDynamic = false
+        space.zPosition = 1
+        
+        space.run(moveAndRemoveSpaceTubes)
+        
+        self.addChild(space)
+        
+    }
+    
     func addFly() {
         let flyTexture1 = SKTexture(imageNamed: "fly1.png")
          let flyTexture2 = SKTexture(imageNamed: "fly2.png")
@@ -171,7 +195,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBegin(_ contact: SKPhysicsContact) {
-        <#code#>
+        
     }
    
     
